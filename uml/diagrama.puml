@@ -1,0 +1,61 @@
+@startuml
+skinparam monochrome true
+skinparam style strictuml
+skinparam classBackgroundColor White
+skinparam backgroundColor White
+skinparam shadowing false
+skinparam classAttributeIconSize 0
+
+abstract class Seguro {
+    # perfilRisco : PerfilRisco
+    # premioBase : float
+    + Seguro(premioBase : float)
+    + setPerfilRisco(perfilRisco : PerfilRisco) : void
+    + setPremioBase(premioBase : float) : void
+    + {abstract} calcularPremio() : float
+}
+
+class SeguroResidencial {
+    + SeguroResidencial(premioBase : float)
+    + calcularPremio() : float
+}
+
+class SeguroAuto {
+    + SeguroAuto(premioBase : float)
+    + calcularPremio() : float
+}
+
+class SeguroViagem {
+    - numeroDias : int
+    + SeguroViagem(premioBase : float)
+    + setNumeroDias(numeroDias : int) : void
+    + calcularPremio() : float
+}
+
+interface PerfilRisco {
+    + percentualAgravo() : float
+}
+
+class RiscoBaixo {
+    + percentualAgravo() : float
+}
+
+class RiscoMedio {
+    + percentualAgravo() : float
+}
+
+class RiscoAlto {
+    + percentualAgravo() : float
+}
+
+Seguro <|-- SeguroResidencial
+Seguro <|-- SeguroAuto
+Seguro <|-- SeguroViagem
+
+PerfilRisco <|.. RiscoBaixo
+PerfilRisco <|.. RiscoMedio
+PerfilRisco <|.. RiscoAlto
+
+Seguro o--> PerfilRisco
+
+@enduml
